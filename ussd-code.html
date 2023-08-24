@@ -5,174 +5,253 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>USSD Banking</title>
+    <style>
+        body {
+            width: 90vw;
+            height: 70vh;
+            background-image: url("https://media.istockphoto.com/id/1426219239/photo/coins-stacking-with-white-up-arrow-and-percentage-on-international-banknote-for-increasing.jpg?s=612x612&w=0&k=20&c=_b7iKc8zjOjhMHLC6AedhUvsSMi_1xSOyDJRC_-_AJk=");
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            opacity: 1;
+
+        }
+
+        div {
+            border: 2px solid rgb(100, 97, 97);
+            width: 50%;
+            height: 50%;
+            background-color: antiquewhite;
+            margin: 25vh 25vw;
+            text-align: center;
+            border-radius: 2rem;
+            box-shadow: 3px 3px 8px rgb(61, 60, 60);
+        }
+
+        .animated-text {
+            font-size: 1.8rem;
+            animation: textAnimation 4s infinite;
+            font-family: Arial, Helvetica, sans-serif;
+            font-weight: bold;
+        }
+
+        @keyframes textAnimation {
+            0% {
+                transform: scale(1);
+                /* Initial state */
+                opacity: 0;
+            }
+
+            50% {
+                transform: scale(1.1);
+                /* Mid animation state */
+                opacity: 1;
+            }
+
+            100% {
+                transform: scale(1);
+                /* Final state */
+                opacity: 0;
+            }
+        }
+        button{
+            padding: 2%;
+            background-color: rgb(150, 8, 8);
+            border-radius: 0.5rem;
+            color: white;
+        }
+    </style>
 </head>
 
 <body>
-    <h1>This demonstrates USSD.</h1>
+    <div>
+        <p class="animated-text">Welcome to SURE Bank with USSD!😃</p>
+        <p style="font-style: italic;">To begin, click the button below</p>
+        <button onclick="startProcess()">*123#</button>
+    </div>
     <script>
-        alert('Welcome to SURE Bank USSD Banking!!!');
-        let proceed = confirm('would you like to proceed?')
-        let accountBalance = 5000
-        //Check for each operation
-        while (proceed) {
-            let options = prompt(`SURE BANK
-            Please select your options (1, 2 or 3):
-            1. Transfer
-            2. Recharge
-            3. Data`);
-            //Transfer
-            if (options === '1') {
-                let accountNumber = prompt(`Please insert your 11-digit account number`);
-                //When you include the wrong number of digits
-                while (accountNumber.length !== 11) {
-                    accountNumber = prompt(`Please insert your 11-digit account number`)
-                };
-                let amount = prompt(`Enter amount`);
-                let pin = prompt(`To transfer ${amount} to ${accountNumber}, enter your 4-digit pin`);
-                let pinCounter = 1
-                //When the pin is invalid
-                while (pin.length !== 4 || Number(pin) === NaN) {
-                    alert('Invalid pin!')
-                    pin = prompt(`Please, your pin must be 4 digits`);
-                    pinCounter++
-                    if (pinCounter === 3) {
-                        alert('You have exceeded your maximum pin trial!');
-                        proceed = false
-                        break
+        //Event listener function.
+        const startProcess = () =>{
+
+            alert('Welcome to SURE Bank USSD Banking!!!');
+            let proceed = confirm('would you like to proceed?')
+            let accountBalance = 5000
+            //Check for each operation
+            while (proceed) {
+                let options = prompt(`SURE BANK
+                Please select your options (1, 2 or 3):
+                1. Transfer
+                2. Recharge
+                3. Data`);
+                //Transfer
+                if (options === '1') {
+
+                    let amount = prompt(`Enter amount`);
+                    let pin = prompt(`To transfer ${amount} to ${accountNumber}, enter your 4-digit pin`);
+                    let pinCounter = 1
+                    //When the pin is invalid
+                    while (pin.length !== 4 || Number(pin) === NaN) {
+                        alert('Invalid pin!')
+                        pin = prompt(`Please, your pin must be 4 digits`);
+                        pinCounter++
+                        if (pinCounter === 3) {
+                            alert('You have exceeded your maximum pin trial!');
+                            proceed = false
+                            break
+                        }
+                    };
+                    //Stop the process when the pin is invalid
+                    if (proceed === false) break
+                    //Continue if pin is valid
+                    if (accountBalance > +amount) {
+                        alert(`Transfer of ${amount} was successful!!`);
+                        accountBalance -= amount
+                    } else {
+                        alert(`Insufficient funds`)
                     }
-                };
-                if (proceed === false) break
-                if (accountBalance > +amount) {
-                    alert(`Transfer of ${amount} was successful!!`);
-                    accountBalance -= amount
-                } else {
-                    alert(`Insufficient funds`)
+                    let confirmation = prompt(`Would you like to perform another operation?
+                    1. yes
+                    2. no`);
+                    if (confirmation === '1' || confirmation === 'yes') {
+                        proceed = true;
+                    } else {
+                        proceed = false;
+                    };
+
                 }
-                let confirmation = prompt(`Would you like to perform another operation?
-                1. yes
-                2. no`);
-                if (confirmation === '1' || confirmation === 'yes') {
-                    proceed = true;
-                } else {
-                    proceed = false;
-                };
                 //Recharge
-            }
-
-            else if (options === '2') {
-                accountNumber = prompt(`Please insert your 11-digit account number`)
-                //When the account number is invalid
-                while (accountNumber.length !== 11 || Number(accountNumber) === NaN) {
+                else if (options === '2') {
                     accountNumber = prompt(`Please insert your 11-digit account number`)
-                };
-                let airtimeAmount = prompt(`Enter amount`);
-                let phoneNumber = prompt(`Enter 11 digits phone number`);
-                //When the phone number is invalid
-                while (phoneNumber.length !== 11 || Number(phoneNumber) === NaN) {
-                    phoneNumber = prompt(`Enter 11-digit phone number`);
-                };
-                let pin = prompt(`To purchase ${amount} airtime for ${phoneNumber}, enter your 4-digit pin`);
-                let pinCounter = 1
-                //When the pin is invalid
-                while (pin.length !== 4 || Number(pin) === NaN) {
-                    alert('Invalid pin!')
-                    pin = prompt(`Please, your pin must be 4 digits`);
-                    pinCounter++
-                    if (pinCounter === 3) {
-                        alert('You have exceeded your maximum pin trial!');
-                        proceed = false
-                        break
+                    //When the account number is invalid
+                    while (accountNumber.length !== 11 || Number(accountNumber) === NaN) {
+                        accountNumber = prompt(`Please insert your 11-digit account number`)
+                    };
+                    let airtimeAmount = prompt(`Enter amount`);
+                    let phoneNumber = prompt(`Enter 11 digits phone number`);
+                    //When the phone number is invalid
+                    while (phoneNumber.length !== 11 || Number(phoneNumber) === NaN) {
+                        phoneNumber = prompt(`Enter 11-digit phone number`);
+                    };
+                    let pin = prompt(`To purchase ${amount} airtime for ${phoneNumber}, enter your 4-digit pin`);
+                    let pinCounter = 1
+                    //When the pin is invalid
+                    while (pin.length !== 4 || Number(pin) === NaN) {
+                        alert('Invalid pin!')
+                        pin = prompt(`Please, your pin must be 4 digits`);
+                        pinCounter++
+                        if (pinCounter === 3) {
+                            alert('You have exceeded your maximum pin trial!');
+                            proceed = false
+                            break
+                        }
+                    };
+                    //Stop the process when the pin is invalid
+                    if (proceed === false) break
+                    //Continue if pin is valid
+                    if (accountBalance > +airtimeAmount) {
+                        alert(`Airtime purchase of N${amount} was successful!!`);
+                        accountBalance -= airtimeAmount
+                    } else {
+                        alert(`Insufficient funds`)
                     }
-                };
-                if (proceed === false) break
-                if (accountBalance > +airtimeAmount) {
-                    alert(`Airtime purchase of N${amount} was successful!!`);
-                    accountBalance -= airtimeAmount
-                } else {
-                    alert(`Insufficient funds`)
-                }
-
-                let confirmation = prompt(`Would you like to perform another operation?
-                1. yes
-                2. no`);
-                if (confirmation === '1' || confirmation === 'yes') {
-                    proceed = true;
-                } else {
-                    proceed = false;
-                };
-                //Buy airtime
-            } else if (options === '3') {
-                accountNumber = prompt(`Please insert your 11-digit account number`)
-                while (accountNumber.length !== 11 || Number(accountNumber) === NaN) {
-                    accountNumber = prompt(`Please insert your 11-digit account number`)
-                };
-                let serviceProvider = prompt(`Select service provider
-                1. MTN_Data
-                2. Airtel_Data
-                3. GLO_Data
-                4. 9Mobile_Data`);
-                // while (serviceProvider !== '1' || serviceProvider !== '2' || serviceProvider !== '3' || serviceProvider !== '4') {
-                //     serviceProvider = prompt(`Select service provider
-                // 1. MTN_Data
-                // 2. Airtel_Data
-                // 3. GLO_Data
-                // 4. 9Mobile_Data`);
-                // }
-                let dataPlan = prompt(`Please, select your data plan
-                1. Daily Plan   
-                2. Weekly Plan
-                3. Monthly plan`);
-                // while (dataPlan !== '1' || dataPlan !== '2' || dataPlan !== '3' || dataPlan !== '4') {
-                //     dataPlan = prompt(`Select your dataplan
-                // 1. Daily Plan   
-                // 2. Weekly Plan
-                // 3. Monthly plan`);
-                // }
-                let amount = prompt(`Enter amount`);
-
-                let phoneNumber = prompt(`Enter 11 digits phone number`);
-                while (phoneNumber.length !== 11 || Number(phoneNumber) === NaN) {
-                    phoneNumber = prompt(`Enter 11-digit phone number`);
-                };
-                let pin = prompt(`To purchase ${amount} airtime for ${phoneNumber}, enter your 4-digit pin`);
-                let pinCounter = 1
-                //when the pin is invalid
-                while (pin.length !== 4 || Number(pin) === NaN) {
-                    alert('Invalid pin!')
-                    pin = prompt(`Please, your pin must be 4 digits`);
-                    pinCounter++
-                    if (pinCounter === 3) {
-                        alert('You have exceeded your maximum pin trial!');
-                        proceed = false
-                        break
+    
+                    let confirmation = prompt(`Would you like to perform another operation?
+                    1. yes
+                    2. no`);
+                    if (confirmation === '1' || confirmation === 'yes') {
+                        proceed = true;
+                    } else {
+                        proceed = false;
+                    };
+                    //Buy airtime
+                } else if (options === '3') {
+                    let serviceProvider = prompt(`Select service provider
+                    1. MTN_Data
+                    2. Airtel_Data
+                    3. GLO_Data
+                    4. 9Mobile_Data`);
+                    if(serviceProvider === null) proceed === false
+                    if(proceed === false) break
+                    while (serviceProvider !== '1' || serviceProvider !== '2' || serviceProvider !== '3' || serviceProvider !== '4') {
+                        alert('You have not selected any option')
+                        serviceProvider = prompt(`Select service provider
+                    1. MTN_Data
+                    2. Airtel_Data
+                    3. GLO_Data
+                    4. 9Mobile_Data`);
+                    if(serviceProvider === null){
+                            proceed = false;
+                            break
+                        }
                     }
-                };
-                if (proceed === false) break
-                if (accountBalance > +amount) {
-                    alert(` Data purchase of N${amount} was successful!!`);
-                    accountBalance -= amount
+                    if(proceed === false) break
+                    let dataPlan = prompt(`Please, select your data plan
+                    1. Daily Plan   
+                    2. Weekly Plan
+                    3. Monthly plan`);
+                    //Cancel the entire operation
+                    if(dataPlan === null) proceed = false
+                    if(proceed === false) break
+                    while (dataPlan !== '1' || dataPlan !== '2' || dataPlan !== '3' || dataPlan !== '4') {
+                        dataPlan = prompt(`Select your dataplan
+                        1. Daily Plan   
+                        2. Weekly Plan
+                        3. Monthly plan`);
+                        if(dataPlan === null){
+                            proceed = false;
+                            break
+                        }
+                    }
+                    //Cancel the entire operation
+                    if(proceed === false) break
+                    let amount = prompt(`Enter amount`);
+    
+                    let phoneNumber = prompt(`Enter 11 digits phone number`);
+                    while (phoneNumber.length !== 11 || Number(phoneNumber) === NaN) {
+                        phoneNumber = prompt(`Enter 11-digit phone number`);
+                    };
+                    let pin = prompt(`To purchase ${amount} airtime for ${phoneNumber}, enter your 4-digit pin`);
+                    let pinCounter = 1
+                    //when the pin is invalid
+                    while (pin.length !== 4 || Number(pin) === NaN) {
+                        alert('Invalid pin!')
+                        pin = prompt(`Please, your pin must be 4 digits`);
+                        pinCounter++
+                        if (pinCounter === 3) {
+                            alert('You have exceeded your maximum pin trial!');
+                            proceed = false
+                            break
+                        }
+                    };
+                    //Stop the process when the pin is invalid
+                    if (proceed === false) break
+                    //Continue if pin is valid
+                    if (accountBalance > +amount) {
+                        alert(` Data purchase of N${amount} was successful!!`);
+                        accountBalance -= amount
+                    } else {
+                        alert(`Insufficient funds`)
+                    }
+                    let confirmation = prompt(`Would you like to perform another operation?
+                    1. yes
+                    2. no`);
+                    if (confirmation === '1' || confirmation === 'yes') {
+                        proceed = true;
+                    } else {
+                        proceed = false;
+                    };
                 } else {
-                    alert(`Insufficient funds`)
+                    proceed = prompt(`You have not selected a valid option
+                    Would you like to continue?
+                    1. yes
+                    2. no`);
+                    if (proceed === '1') {
+                        proceed = true
+                    } else {
+                        proceed = false
+                    }
+    
                 }
-                let confirmation = prompt(`Would you like to perform another operation?
-                1. yes
-                2. no`);
-                if (confirmation === '1' || confirmation === 'yes') {
-                    proceed = true;
-                } else {
-                    proceed = false;
-                };
-            } else {
-                proceed = prompt(`You have not selected a valid option
-                Would you like to continue?
-                1. yes
-                2. no`);
-                if (proceed === '1') {
-                    proceed = true
-                } else {
-                    proceed = false
-                }
-
             }
         }
 

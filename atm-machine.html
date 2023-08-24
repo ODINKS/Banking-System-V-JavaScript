@@ -5,107 +5,182 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bank App</title>
+    <style>
+        body {
+            width: 90vw;
+            height: 70vh;
+            background-image:
+                url("https://media.istockphoto.com/id/1426219239/photo/coins-stacking-with-white-up-arrow-and-percentage-on-international-banknote-for-increasing.jpg?s=612x612&w=0&k=20&c=_b7iKc8zjOjhMHLC6AedhUvsSMi_1xSOyDJRC_-_AJk=");
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            opacity: 1;
+
+        }
+
+        div {
+            border: 2px solid rgb(100, 97, 97);
+            width: 50%;
+            height: 50%;
+            background-color: antiquewhite;
+            margin: 25vh 25vw;
+            text-align: center;
+            border-radius: 2rem;
+            box-shadow: 3px 3px 8px rgb(61, 60, 60);
+        }
+
+        .animated-text {
+            font-size: 1.8rem;
+            animation: textAnimation 4s infinite;
+            font-family: Arial, Helvetica, sans-serif;
+            font-weight: bold;
+        }
+
+        @keyframes textAnimation {
+            0% {
+                transform: scale(1);
+                /* Initial state */
+                opacity: 0;
+            }
+
+            50% {
+                transform: scale(1.1);
+                /* Mid animation state */
+                opacity: 1;
+            }
+
+            100% {
+                transform: scale(1);
+                /* Final state */
+                opacity: 0;
+            }
+        }
+
+        button {
+            padding: 2%;
+            background-color: rgb(150, 8, 8);
+            border-radius: 0.5rem;
+            color: white;
+        }
+    </style>
 </head>
 
 <body>
-    <h1>This code demonstrates the Nigerian ATM operation</h1>
+    <div>
+        <p class="animated-text">Welcome to SURE Bank ATM Stand!😃</p>
+        <p style="font-style: italic;">To begin, click the button below</p>
+        <button onclick="startOperation()">START</button>
+    </div>
     <script>
-        //The ATM Implementation.
-        alert('Welcome to SURE Bank!');
-        let isCardInserted = confirm('Please insert your card.');
-        let accountBalance = 5000
+        const startOperation = () => {
 
-        //Check for each condition
-        while (isCardInserted) {
-            let pin = prompt('Please insert your 4-digit pin.');
-            //When you input the wrong pin
-            while (pin.length !== 4) {
-                alert('Invalid pin')
-                pin = prompt(`Your pin must be exactly 4-digits`)
-            }
-            let atmOperation = prompt(`What type of action would you like to perform (Select a number)?
-                1. Withdrawal
-                2. Buy airtime
-                3. Check account balance`);
-            //Withdrawal
-            if (atmOperation === '1') {
-                let amount = prompt(`Please select the amount you would like to withdraw
-                    
-                    1000    2000    5000
-                    10000   20000   others`);
-                if (amount === 'others') {
-                    amount = prompt('Please input your amount')
-                }
-                //Check for account bal sufficiency
-                if (accountBalance > +amount) {
-                    alert('Please wait ...');
-                    alert(`${amount} withdrawal successful! Please take your cash.`);
-                    accountBalance -= amount;
-                } else {
-                    alert(`Insufficient funds`)
-                }
+            //The ATM Implementation.
+            alert('Welcome to SURE Bank!');
+            let isCardInserted = confirm('Please insert your card.');
+            let accountBalance = 5000
 
-                isCardInserted = prompt(`Would you like to perform any other operation?
-                    1. yes
-                    2. No`);
-                if (isCardInserted === '1' || isCardInserted === 'yes') {
-                    isCardInserted = true;
-                } else {
-                    alert(`Take your card.
-                        Thank you!!!`)
-                    isCardInserted = false;
+            //Check for each condition
+            while (isCardInserted) {
+                let pin = prompt('Please insert your 4-digit pin.');
+                //When you input the wrong pin
+                while (pin.length !== 4) {
+                    alert('Invalid pin')
+                    pin = prompt(`Your pin must be exactly 4-digits`)
                 }
-                //Buy Airtime
-            } else if (atmOperation === '2') {
-                let phoneNumber = prompt('Please insert the 11-digits phone number')
-                //When you input lower digits
-                while (phoneNumber.length !== 11) {
-                    phoneNumber = prompt('Please insert the 11-digits phone number');
-                };
+                let atmOperation = prompt(`What type of action would you like to perform (Select a number)?
+                    1. Withdrawal
+                    2. Buy airtime
+                    3. Check account balance`);
+                //Withdrawal
+                if (atmOperation === '1') {
+                    let amount = prompt(`Please select the amount you would like to withdraw
+                        
+                        1000    2000    5000
+                        10000   20000   others`);
+                    if (amount === 'others') {
+                        amount = prompt('Please input your amount')
+                    }
+                    //Check for account bal sufficiency
+                    if (accountBalance > +amount) {
+                        alert('Please wait ...');
+                        alert(`${amount} withdrawal successful! Please take your cash.`);
+                        accountBalance -= amount;
+                    } else {
+                        alert(`Insufficient funds`)
+                    }
 
-                let airtimeAmount = Number(prompt('Please enter the airtime amount'));
-                if (airtimeAmount === NaN) airtimeAmount = Number(prompt('Please enter the airtime amount'));
-                if (accountBalance > airtimeAmount) {
-                    alert(`${airtimeAmount} airtime purchase was successful!!!`);
-                    accountBalance -= airtimeAmount;
-                } else {
-                    alert(`Insufficient funds`)
-                }
-
-                isCardInserted = prompt(`Would you like to perform any other operation?
-                    1. yes
-                    2. no`);
-                if (isCardInserted === '1' || isCardInserted === 'yes') {
-                    isCardInserted = true;
-                } else {
-                    alert(`Take your card.
-                        Thank you!!!`)
-                    isCardInserted = false;
-                };
-                //Check account balance
-            } else if (atmOperation === '3') {
-                let confirmation = prompt(`Would you like to continue?
-                1. yes
-                2. no`);
-                if (confirmation === '1' || confirmation === 'yes') {
-                    alert('Please wait ...');
-                    alert(`Your account balance is N${accountBalance}`)
-                } else {
                     isCardInserted = prompt(`Would you like to perform any other operation?
-                    1. yes
-                    2. no`);
+                        1. yes
+                        2. No`);
                     if (isCardInserted === '1' || isCardInserted === 'yes') {
                         isCardInserted = true;
                     } else {
                         alert(`Take your card.
-                        Thank you!!!`)
+                            Thank you!!!`)
+                        isCardInserted = false;
+                    }
+                    //Buy Airtime
+                } else if (atmOperation === '2') {
+                    let phoneNumber = prompt('Please insert the 11-digits phone number')
+                    //When you input lower digits
+                    while (phoneNumber.length !== 11) {
+                        phoneNumber = prompt('Please insert the 11-digits phone number');
+                    };
+
+                    let airtimeAmount = Number(prompt('Please enter the airtime amount'));
+                    if (airtimeAmount === NaN) airtimeAmount = Number(prompt('Please enter the airtime amount'));
+                    if (accountBalance > airtimeAmount) {
+                        alert(`${airtimeAmount} airtime purchase was successful!!!`);
+                        accountBalance -= airtimeAmount;
+                    } else {
+                        alert(`Insufficient funds`)
+                    }
+
+                    isCardInserted = prompt(`Would you like to perform any other operation?
+                        1. yes
+                        2. no`);
+                    if (isCardInserted === '1' || isCardInserted === 'yes') {
+                        isCardInserted = true;
+                    } else {
+                        alert(`Take your card.
+                            Thank you!!!`)
                         isCardInserted = false;
                     };
+                    //Check account balance
+                } else if (atmOperation === '3') {
+                    let confirmation = prompt(`Would you like to continue?
+                    1. yes
+                    2. no`);
+                    if (confirmation === '1' || confirmation === 'yes') {
+                        alert('Please wait ...');
+                        alert(`Your account balance is N${accountBalance}`)
+                        isCardInserted = prompt(`Would you like to perform any other operation?
+                        1. yes
+                        2. no`);
+                        if (isCardInserted === '1' || isCardInserted === 'yes') {
+                            isCardInserted = true;
+                        } else {
+                            alert(`Take your card.
+                            Thank you!!!`)
+                            isCardInserted = false;
+                        };
+                    } else {
+                        isCardInserted = prompt(`Would you like to perform any other operation?
+                        1. yes
+                        2. no`);
+                        if (isCardInserted === '1' || isCardInserted === 'yes') {
+                            isCardInserted = true;
+                        } else {
+                            alert(`Take your card.
+                            Thank you!!!`)
+                            isCardInserted = false;
+                        };
+                    }
+                    //If not any of the options above
+                } else {
+                    alert('You have not selected any option')
+                    isCardInserted = true
                 }
-                //If not any of the options above
-            } else {
-                alert('You have not selected any option')
-                isCardInserted = true
             }
         }
 
